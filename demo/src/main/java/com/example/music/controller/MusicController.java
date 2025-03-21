@@ -1,49 +1,66 @@
 package com.example.music.controller;
 
-import com.example.music.model.Music;
-import com.example.music.service.MusicService;
+import com.example.music.domain.Music;
+import com.example.music.dto.MusicCreateRequest;
+import com.example.music.dto.MusicResponse;
+import com.example.music.dto.MusicUpdateRequest;
+import com.example.music.mapper.MusicMapper;
+import com.example.music.service.IMusicCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/music")
 public class MusicController {
+    private final IMusicCommandService musicService;
 
     @Autowired
-    private MusicService musicService;
-
-    @GetMapping
-    public ResponseEntity<List<Music>> getAll() {
-        List<Music> musicList = musicService.getAll();
-        return new ResponseEntity<>(musicList, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Music> getById(@PathVariable Long id) {
-        return musicService.getById(id)
-                .map(music -> new ResponseEntity<>(music, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public MusicController(IMusicCommandService musicService) {
+        this.musicService = musicService;
     }
 
     @PostMapping
-    public ResponseEntity<Music> add(@RequestBody Music music) {
-        Music newMusic = musicService.save(music);
-        return new ResponseEntity<>(newMusic, HttpStatus.CREATED);
+    public ResponseEntity<MusicResponse> createmusicsync(@RequestBody MusicCreateRequest request) {
+        Music music = MusicMapper.toEntity(request);
+        Music createdMusic = musicService.createMusic(music);
+        MusicResponse response = MusicMapper.toResponse(createdMusic);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Music> update(@PathVariable Long id, @RequestBody Music music) {
-        Music updatedMusic = musicService.update(id, music);
-        return new ResponseEntity<>(updatedMusic, HttpStatus.OK);
+    @PatchMapping("/{music_identifier}")
+    public ResponseEntity<MusicResponse> updatemusicsync(
+            @PathVariable("music_identifier") Long id,
+            @RequestBody MusicUpdateRequest request) {
+        Music music = MusicMapper.toEntity(request, id);
+        Music updatedMusic = musicService.updateMusic(music);
+        MusicResponse response = MusicMapper.toResponse(updatedMusic);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        musicService.delete(id);
+    @GetMapping
+    public ResponseEntity<List<MusicResponse>> getmusicsync() {
+        List<Music> musicList = musicService.getMusic();
+        List<MusicResponse> responseList = musicList.stream()
+                .map(MusicMapper::toResponse)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{music_identifier}")
+    public ResponseEntity<MusicResponse> getmusicsync(@PathVariable("music_identifier") Long id) {
+        Music music = musicService.getMusic(id);
+        MusicResponse response = MusicMapper.toResponse(music);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{music_identifier}")
+    public ResponseEntity<Void> deletemusicsync(@PathVariable("music_identifier") Long id) {
+        musicService.deleteMusic(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
