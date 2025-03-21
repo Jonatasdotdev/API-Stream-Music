@@ -1,11 +1,11 @@
-package com.example.music.mapper;
+package com.example.demo.music.mapper;
 
 
 
-import com.example.music.domain.Music;
-import com.example.music.dto.MusicCreateRequest;
-import com.example.music.dto.MusicResponse;
-import com.example.music.dto.MusicUpdateRequest;
+import com.example.demo.music.domain.Music;
+import com.example.demo.music.dto.MusicCreateRequest;
+import com.example.demo.music.dto.MusicResponse;
+import com.example.demo.music.dto.MusicUpdateRequest;
 
 public class MusicMapper {
     public static Music toEntity(MusicCreateRequest request) {

@@ -1,12 +1,11 @@
-package com.example.music.service;
+package com.example.demo.music.service;
 
-import com.example.music.domain.Music;
-import com.example.music.repository.MusicRepository;
+import com.example.demo.music.domain.Music;
+import com.example.demo.music.repository.MusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MusicCommandService implements IMusicCommandService {

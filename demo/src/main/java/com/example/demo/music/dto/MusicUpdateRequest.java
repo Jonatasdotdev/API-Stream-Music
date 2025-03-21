@@ -1,6 +1,8 @@
-package com.example.music.dto;
+package com.example.demo.music.dto;
 
-public class MusicCreateRequest {
+
+
+public class MusicUpdateRequest {
     private String title;
     private String artist;
     private String genre;

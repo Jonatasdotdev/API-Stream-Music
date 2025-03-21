@@ -1,11 +1,11 @@
-package com.example.music.controller;
+package com.example.demo.music.controller;
 
-import com.example.music.domain.Music;
-import com.example.music.dto.MusicCreateRequest;
-import com.example.music.dto.MusicResponse;
-import com.example.music.dto.MusicUpdateRequest;
-import com.example.music.mapper.MusicMapper;
-import com.example.music.service.IMusicCommandService;
+import com.example.demo.music.domain.Music;
+import com.example.demo.music.mapper.MusicMapper;
+import com.example.demo.music.service.IMusicCommandService;
+import com.example.demo.music.dto.MusicCreateRequest;
+import com.example.demo.music.dto.MusicResponse;
+import com.example.demo.music.dto.MusicUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

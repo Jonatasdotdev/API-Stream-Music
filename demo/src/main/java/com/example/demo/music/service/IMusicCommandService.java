@@ -1,6 +1,6 @@
-package com.example.music.service;
+package com.example.demo.music.service;
 
-import com.example.music.domain.Music;
+import com.example.demo.music.domain.Music;
 import java.util.List;
 
 public interface IMusicCommandService {

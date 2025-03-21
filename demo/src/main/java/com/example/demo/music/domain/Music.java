@@ -1,4 +1,4 @@
-package com.example.music.domain;
+package com.example.demo.music.domain;
 
 import jakarta.persistence.*;
 
